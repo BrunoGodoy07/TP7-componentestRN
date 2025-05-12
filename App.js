@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, View, Image, ImageBackground, Button, Alert } from 'react-native';
 import React from 'react';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
-const image = {uri: 'https://legacy.reactjs.org/logo-og.png'};
+const image = {uri: 'https://64.media.tumblr.com/2a6d7136713ed9dcb8f1732da82e1c9d/7d38262b39a0ad30-91/s500x750/5eaee3b509aca301cb02f60d698a1cba20457aea.png'};
 
 export default function App() {
   const [reseña, handleReseñaChange] = React.useState('');
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     titulo: {
     color: 'white',
     fontSize: 36,
-    lineHeight: 84,
+    lineHeight: 64,
     fontWeight: 'bold',
     textAlign: 'center',
     backgroundColor: '#000000c0',
