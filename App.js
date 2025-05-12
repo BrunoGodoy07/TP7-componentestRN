@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, ImageBackground, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, ImageBackground, Button } from 'react-native';
 import React from 'react';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 const image = {uri: 'https://legacy.reactjs.org/logo-og.png'};
 
 export default function App() {
+  const [reseña, handleReseñaChange] = React.useState('');
   return (
     <SafeAreaProvider>
     <StatusBar style='light'/>
@@ -16,6 +17,12 @@ export default function App() {
             <Text style={styles.text}>Nombre: Bruno</Text>
             <Text style={styles.text}>Apellido: Mattioda</Text>
             <Text style={styles.text}>Titulo: Graphics Engineer</Text>
+            <Text style={styles.text}>Pon tu reseña!</Text>
+            <TextInput 
+            style={styles.input}
+            placeholder='ingrese...'
+            onChangeText={handleReseñaChange}
+            value={reseña}></TextInput>
           </View> 
       </ImageBackground>  
     </SafeAreaView>
@@ -50,17 +57,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: '50' ,
     width: '80%',
-    height: '50%'
+    height: '70%'
   },
   text:{
     color: 'black',
     fontSize: 16,
-    lineHeight: 84,
+    lineHeight: 54,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   profilePicture:{
     width: '40%',
     height: '30%'
-  }
+  },
+  input: {
+    height: 40,
+    borderWidth: 2,
+    padding: 1,
+    width: '70%',
+  },
+
 });
