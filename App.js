@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Image, ImageBackground, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, ImageBackground, Button, Alert } from 'react-native';
 import React from 'react';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 const image = {uri: 'https://legacy.reactjs.org/logo-og.png'};
@@ -23,6 +23,11 @@ export default function App() {
             placeholder='ingrese...'
             onChangeText={handleReseñaChange}
             value={reseña}></TextInput>
+            <Text style={styles.text}>Envia tu reseña!</Text>
+            <Button 
+            title='Enviar'
+            onPress={() => Alert.alert('Tu reseña a sido enviada.')}> 
+            </Button>
           </View> 
       </ImageBackground>  
     </SafeAreaView>
@@ -62,7 +67,7 @@ const styles = StyleSheet.create({
   text:{
     color: 'black',
     fontSize: 16,
-    lineHeight: 54,
+    lineHeight: 44,
     fontWeight: 'bold',
     textAlign: 'center',
   },
