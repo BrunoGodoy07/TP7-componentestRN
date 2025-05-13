@@ -23,7 +23,8 @@
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/jason13.png"
+    },
+    "icon": "./assets/jason13.png"
   }
 }

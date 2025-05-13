@@ -16,10 +16,19 @@
     "react-dom": "19.0.0",
     "react-native": "0.79.2",
     "react-native-safe-area-context": "^5.4.0",
-    "react-native-web": "^0.20.0"
+    "react-native-web": "^0.20.0",
+    "expo-splash-screen": "~0.30.8"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
   },
-  "private": true
+  "private": true,
+  "expo": {
+    "splash": {
+      "image": "./assets/jason13.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    }
+  }
+  
 }
