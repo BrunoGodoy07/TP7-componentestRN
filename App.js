@@ -33,7 +33,7 @@ export default function App() {
 
 
   return (
-    <SafeAreaProvider>
+    <View>
       <StatusBar barStyle="light-content" backgroundColor="#000000" />
       <SafeAreaView style={styles.container}>
         <ImageBackground source={backgroundImage} style={styles.image} blurRadius={2}>
@@ -79,7 +79,7 @@ export default function App() {
           </Animated.View>
         </ImageBackground>
       </SafeAreaView>
-    </SafeAreaProvider>
+    </View>
   );
 }
 
