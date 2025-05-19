@@ -12,7 +12,7 @@ import {
   StatusBar,
   Animated 
 } from 'react-native';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const backgroundImage = {
   uri: 'https://64.media.tumblr.com/2a6d7136713ed9dcb8f1732da82e1c9d/7d38262b39a0ad30-91/s500x750/5eaee3b509aca301cb02f60d698a1cba20457aea.png'
@@ -33,15 +33,24 @@ export default function App() {
 
 
   return (
-    <View style="pagina">
+    <View>
       <StatusBar barStyle="light-content" backgroundColor="#000000" />
       <SafeAreaView style={styles.container}>
         <ImageBackground source={backgroundImage} style={styles.image} blurRadius={2}>
         <Animated.View style={[styles.card, { opacity: fadeAnim }]}>
 
             <Image source={require('./assets/mujer.png')} style={styles.profilePicture} />
+            
             <Text style={styles.name}>Bruno Mattioda</Text>
             <Text style={styles.title}>Graphics Engineer</Text>
+
+            <Image source={require('./assets/github.png')} style={styles.icon} />
+            <Image source={require('./assets/linkedin.png')} style={styles.icon} />
+            <Image source={require('./assets/correo.png')} style={styles.icon} />
+            <Image source={require('./assets/telefono.png')} style={styles.icon} />
+
+
+
 
             <TextInput
               style={styles.input}
@@ -61,7 +70,7 @@ export default function App() {
                 }
               }}
             >
-              <Text style={styles.buttonText}>Contactar</Text>
+              <Text style={styles.buttonText1}>Contactar</Text>
             </TouchableOpacity>
 
             <Pressable
@@ -72,7 +81,7 @@ export default function App() {
                 isPressed && styles.buttonPortfolioPressed
               ]}
             >
-              <Text style={[styles.buttonText, isPressed && styles.textPressed]}>
+              <Text style={[styles.buttonText2, isPressed && styles.textPressed]}>
                 Ver Portfolio
               </Text>
             </Pressable>
@@ -110,6 +119,12 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginBottom: 15
   },
+  icon: {
+    display: flex,
+    width: 50,
+    height: 50
+  },
+
   name: {
     fontSize: 22,
     fontWeight: 'bold',
@@ -139,8 +154,13 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center'
   },
-  buttonText: {
-    color: 'white',
+  buttonText1: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+  buttonText2: {
+    color: 'grey',
     fontWeight: 'bold',
     fontSize: 16
   },
