@@ -1,91 +1,114 @@
-import React, { useState, useEffect, useRef  } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet,
+  View,
+  SafeAreaView,
   Text,
   TextInput,
-  View,
   Image,
   ImageBackground,
-  Alert,
   TouchableOpacity,
   Pressable,
   StatusBar,
-  Animated 
+  Alert,
+  StyleSheet
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const backgroundImage = {
-  uri: 'https://64.media.tumblr.com/2a6d7136713ed9dcb8f1732da82e1c9d/7d38262b39a0ad30-91/s500x750/5eaee3b509aca301cb02f60d698a1cba20457aea.png'
+  uri: 'https://media1.tenor.com/m/4gpAcd6L6SsAAAAC/minecraft-minecraft-movie.gif'
 };
 
+const profilePhoto = {
+  uri: 'https://cdn-icons-png.flaticon.com/512/2922/2922561.png' 
+};
+
+const iconLinks = [
+  {
+    uri: 'https://cdn-icons-png.flaticon.com/512/5968/5968764.png', 
+    alt: 'GitHub'
+  },
+  {
+    uri: 'https://cdn-icons-png.flaticon.com/512/145/145807.png', 
+    alt: 'LinkedIn'
+  },
+  {
+    uri: 'https://cdn-icons-png.flaticon.com/512/561/561127.png', 
+    alt: 'Email'
+  },
+  {
+    uri: 'https://cdn-icons-png.flaticon.com/512/455/455705.png', 
+    alt: 'Teléfono'
+  }
+];
+
 export default function App() {
+  const [showSplash, setShowSplash] = useState(true);
   const [message, setMessage] = useState('');
   const [isPressed, setIsPressed] = useState(false);
-  const fadeAnim = useRef(new Animated.Value(0)).current;
 
-    useEffect(() => {
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true
-      }).start();
-    }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
+  const handleSend = () => {
+    if (message.trim() === '') {
+      Alert.alert('Mensaje vacío', 'Por favor escribe un mensaje antes de enviar.');
+    } else {
+      Alert.alert('Mensaje enviado', `Tu mensaje fue: "${message}"`);
+      setMessage('');
+    }
+  };
+
+  if (showSplash) {
+    return (
+      <View style={styles.splashContainer}>
+        <StatusBar barStyle="light-content" backgroundColor="#000" />
+        <Text style={styles.splashText}>Cargando perfil...</Text>
+      </View>
+    );
+  }
 
   return (
-    <View>
-      <StatusBar barStyle="light-content" backgroundColor="#000000" />
+    <View style={{ flex: 1 }}>
+      <StatusBar barStyle="light-content" backgroundColor="#000" />
       <SafeAreaView style={styles.container}>
         <ImageBackground source={backgroundImage} style={styles.image} blurRadius={2}>
-        <Animated.View style={[styles.card, { opacity: fadeAnim }]}>
+          <View style={styles.card}>
+            <Image source={profilePhoto} style={styles.profileImage} />
 
-            <Image source={require('./assets/mujer.png')} style={styles.profilePicture} />
-            
-            <Text style={styles.name}>Bruno Mattioda</Text>
-            <Text style={styles.title}>Graphics Engineer</Text>
+            <Text style={styles.name}>Jesica González</Text>
+            <Text style={styles.title}>Desarrolladora Frontend</Text>
 
-            <Image source={require('./assets/github.png')} style={styles.icon} />
-            <Image source={require('./assets/linkedin.png')} style={styles.icon} />
-            <Image source={require('./assets/correo.png')} style={styles.icon} />
-            <Image source={require('./assets/telefono.png')} style={styles.icon} />
+            <View style={styles.iconRow}>
+              {iconLinks.map((icon, index) => (
+                <Image key={index} source={{ uri: icon.uri }} style={styles.icon} />
+              ))}
+            </View>
 
-
-
+            <Pressable
+              onPressIn={() => setIsPressed(true)}
+              onPressOut={() => setIsPressed(false)}
+              style={[styles.portfolioButton, isPressed && styles.buttonPressed]}
+            >
+              <Text style={[styles.portfolioText, isPressed && styles.textPressed]}>
+                Ver Portfolio
+              </Text>
+            </Pressable>
 
             <TextInput
               style={styles.input}
-              placeholder="Escribí tu mensaje..."
+              placeholder="Escribe un mensaje..."
               placeholderTextColor="#888"
               onChangeText={setMessage}
               value={message}
             />
 
-            <TouchableOpacity
-              style={styles.buttonContact}
-              onPress={() => {
-                if (message.trim() === '') {
-                  Alert.alert('Error', 'Por favor escribí un mensaje antes de contactar.');
-                } else {
-                  Alert.alert('Mensaje enviado', `Tu mensaje: "${message}"`);
-                }
-              }}
-            >
-              <Text style={styles.buttonText1}>Contactar</Text>
+            <TouchableOpacity style={styles.contactButton} onPress={handleSend}>
+              <Text style={styles.contactText}>Contactar</Text>
             </TouchableOpacity>
-
-            <Pressable
-              onPressIn={() => setIsPressed(true)}
-              onPressOut={() => setIsPressed(false)}
-              style={[
-                styles.buttonPortfolio,
-                isPressed && styles.buttonPortfolioPressed
-              ]}
-            >
-              <Text style={[styles.buttonText2, isPressed && styles.textPressed]}>
-                Ver Portfolio
-              </Text>
-            </Pressable>
-          </Animated.View>
+          </View>
         </ImageBackground>
       </SafeAreaView>
     </View>
@@ -93,6 +116,17 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  splashContainer: {
+    flex: 1,
+    backgroundColor: '#333',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  splashText: {
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: 'bold'
+  },
   container: {
     flex: 1
   },
@@ -102,38 +136,60 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   card: {
-    backgroundColor: 'white',
     width: '85%',
-    padding: 20,
+    backgroundColor: '#fff',
     borderRadius: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.3,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    elevation: 6
+    padding: 20,
+    alignItems: 'center'
   },
-  profilePicture: {
+  profileImage: {
     width: 100,
     height: 100,
     borderRadius: 50,
     marginBottom: 15
   },
-  icon: {
-    display: flex,
-    width: 50,
-    height: 50
-  },
-
   name: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#333'
+    color: '#1f1f3f',
+    marginBottom: 5
   },
   title: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: 14,
+    color: '#444',
+    fontStyle: 'italic',
+    marginBottom: 15
+  },
+  iconRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 10,
     marginBottom: 20
+  },
+  icon: {
+    width: 30,
+    height: 30,
+    marginHorizontal: 8
+  },
+  portfolioButton: {
+    backgroundColor: '#1f1f3f',
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    borderRadius: 10,
+    marginBottom: 15,
+    width: '100%',
+    alignItems: 'center'
+  },
+  buttonPressed: {
+    backgroundColor: '#333'
+  },
+  portfolioText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+  textPressed: {
+    color: '#ddd'
   },
   input: {
     borderColor: '#ccc',
@@ -142,40 +198,19 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 10,
     paddingVertical: 8,
-    marginBottom: 15,
-    fontSize: 14
+    fontSize: 14,
+    marginBottom: 15
   },
-  buttonContact: {
-    backgroundColor: '#acabc3',
+  contactButton: {
+    backgroundColor: '#6366f1',
     paddingVertical: 12,
-    paddingHorizontal: 25,
-    borderRadius: 10,
-    marginBottom: 10,
-    width: '100%',
-    alignItems: 'center'
-  },
-  buttonText1: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 16
-  },
-  buttonText2: {
-    color: 'grey',
-    fontWeight: 'bold',
-    fontSize: 16
-  },
-  buttonPortfolio: {
-    backgroundColor: '#f0f0f0',
-    paddingVertical: 12,
-    paddingHorizontal: 25,
     borderRadius: 10,
     width: '100%',
     alignItems: 'center'
   },
-  buttonPortfolioPressed: {
-    backgroundColor: '#ddd'
-  },
-  textPressed: {
-    color: '#333'
+  contactText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold'
   }
 });
